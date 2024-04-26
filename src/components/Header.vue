@@ -1,0 +1,44 @@
+<template>
+    <header class="header__menu">
+      <div class="container">
+        <div class="header__navbar">
+          <div class="header__menu--left-side">
+            <a href="/">
+              <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
+            </a>
+
+            <div v-if="path == '/'" class="header__menu--search">
+              <input class="header__menu--search-input" type="text" placeholder="Search " />
+              <i class="header__menu--search-icon fa-solid fa-magnifying-glass"></i>
+            </div>
+          </div>
+
+          <div class="header__menu--right-side">
+            <nav class="header__menu--link">
+              <a class="menu_link" href="#">Restaurants</a>
+              <span class="header__menu--divider-vertical"></span>
+              <a class="menu_link active" href="#">My orders</a>
+            </nav>
+            <div class="header__menu--icon">
+              <a href="#"><img class="header__menu--icon-item" src="@/assets/img/shopping bag.svg" alt="shopping bag icon" /></a>
+              <span class="header__menu--icon-number">4</span>
+            </div>
+            <a href="/signin">
+              <img class="header__menu--useravatar" src="@/assets/img/useravatar.svg" alt="useravatar img" />
+            </a>
+            <span class="header__menu--divider-vertical"></span>
+            <img class="header__menu--icon-mobile" src="@/assets/img/menu.svg" alt=" header menu icon " />
+          </div>
+        </div>
+      </div>
+    </header>
+</template>
+
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute()
+const path = computed( () => route.path )
+
+</script>

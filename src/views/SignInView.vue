@@ -1,52 +1,28 @@
 <template>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="./login.css">
-    <title>Document</title>
-</head>
-<body>
-    <header class="header__menu">
-        <div class="container">
-            <div class="header__navbar">
-                <div class="header__menu--left-side">
-                    <a href="/">
-                        <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
-                    </a>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+            <link rel="stylesheet" href="./login.css">
+            <title>Document</title>
+        </head>
+        <body>
+            <section class="login">
+                <div class="login_container">
+                    <div class="block_left-side">
+                        <SignInForm/>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </header>
-    <section class="login">
-        <div class="login_container">
-            <div class="block_left-side">
-                <div class="auth_form">
-                    <h1 class="login_name">Login</h1>
-                    <label class="login_label" for="email">Email</label>
-                    <input class="login_input" placeholder="name@example.com" id="email" type="text" name="email">
-                    <label class="login_label" for="password">Password</label>
-                    <input class="login_input" placeholder="min.8 characters" id="password" type="text" name="password">
-                    <div class="chackbox">
-                        <input class="chackbox_sign" type="checkbox" name="checkbox"/>
-                        <div class="chackbox_text">Keep me logged in</div>
-                    </div>
-                    <button class="button_login">Login</button>
-                    <a href="#" class="button_forgot">Forgot password</a>
-                    <div class="sign">
-                        <p>Don`t have an account?<a href="#" class="sign_inner"> Sign up</a></p> 
-                    </div>
-                </div>   
-            </div>
-        </div>
-    </section>
-    
-</body>
-</html>
+            </section>            
+        </body>
+    </html>
 </template>
 
 <script setup lang="ts">
+    import { useRouter } from 'vue-router';
+    import { ref } from 'vue';
+    import SignInForm from '@/components/SignInForm.vue'
 </script>
