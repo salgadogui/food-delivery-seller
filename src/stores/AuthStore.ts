@@ -6,4 +6,5 @@ export const useAuthStore = defineStore('auth', () => {
     const password = defineModel<string>('password')
     const remember = defineModel<boolean>('remember', { default: true })
 
+    return { email, password, remember }
 })
