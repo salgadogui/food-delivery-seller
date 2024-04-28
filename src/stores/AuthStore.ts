@@ -1,10 +1,40 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { Auth } from '@/auth';
+import { useRouter } from 'vue-router';
 
-export const useAuthStore = defineStore('auth', () => {
+interface State {
+  email: string;
+  password: string;
+  remember: boolean;
+}
 
-    const email = defineModel<string>('email')
-    const password = defineModel<string>('password')
-    const remember = defineModel<boolean>('remember', { default: true })
+export const useAuthStore = defineStore('auth', {
+  state: (): State => ({
+    email: '',
+    password: '',
+    remember: true,
+  }),
+  getters: {
+    getEmail: (state) => state.email
+  },
 
-    return { email, password, remember }
-})
+  actions: {
+    signIn(email: string, password: string, remember: boolean) {
+      const auth = new Auth(remember)
+      const router = useRouter()
+      let success = false
+      try { auth.signIn(
+        email,
+        password,
+        () => { success = true, this.router.push('/account') },
+        () => { success = false, console.log("Não foi dessa vez!") }
+      ); if (success) { this.updateCredentials(email, password, remember) } 
+    } catch (e) { console.error('Sign in error:', e) }
+    },
+    updateCredentials(email: string, password: string, remember: boolean) {
+      this.$state.email = email;
+      this.$state.password = password;
+      this.$state.remember = remember;
+    }
+  }  
+});
