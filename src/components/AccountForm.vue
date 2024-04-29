@@ -6,16 +6,8 @@
             <h2 class="setting__right--side-InnerTxt">Personal information</h2>
             <div class="setting__right--side-input">
             <div class="input-box">
-                <label for="name">First Name</label>
-                <input type="text" name="name" id="name" required placeholder="Jane">
-            </div>
-            <div class="input-box">
-                <label for="lastname">Last Name</label>
-                <input type="text" name="lastname" id="lastname" required placeholder="Robertson">
-            </div>
-            <div class="input-box">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" required placeholder="jane.robertson@example.com">
+                <input type="email" name="email" id="email" required :placeholder="auth.email">
             </div>
             </div>
             <div class="setting__right--btn">
