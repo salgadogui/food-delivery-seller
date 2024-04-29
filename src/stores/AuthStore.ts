@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   state: (): State => ({
     email: localStorage.getItem('email') || sessionStorage.getItem('token') || '',
     remember: true,
-    loggedIn: false,
+    loggedIn: !!localStorage.getItem('token'),
     token: localStorage.getItem('token') || sessionStorage.getItem('token') || ''
   }),
   getters: {

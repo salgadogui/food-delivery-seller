@@ -18,15 +18,14 @@
               <a class="menu_link" href="#">Restaurants</a>
               <span class="header__menu--divider-vertical"></span>
               <a class="menu_link active" href="#">My orders</a>
+              <span class="header__menu--divider-vertical"></span>
+              <a v-if="!auth.loggedIn" class="menu_link active" href="/signin">Sign In</a>
+              <a v-if="auth.loggedIn" class="menu_link active" href="/account">Account</a>
             </nav>
             <div class="header__menu--icon">
               <a href="#"><img class="header__menu--icon-item" src="@/assets/img/shopping bag.svg" alt="shopping bag icon" /></a>
               <span class="header__menu--icon-number">4</span>
             </div>
-            <a href="/signin">
-              <img class="header__menu--useravatar" src="@/assets/img/useravatar.svg" alt="useravatar img" />
-            </a>
-            <span class="header__menu--divider-vertical"></span>
             <img class="header__menu--icon-mobile" src="@/assets/img/menu.svg" alt=" header menu icon " />
           </div>
         </div>
@@ -37,7 +36,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { useAuthStore } from '@/stores/AuthStore';
 
+const auth = useAuthStore()
 const route = useRoute()
 const path = computed( () => route.path )
 
