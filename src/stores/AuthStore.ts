@@ -1,40 +1,53 @@
 import { defineStore } from 'pinia';
 import { Auth } from '@/auth';
-import { useRouter } from 'vue-router';
 
 interface State {
   email: string;
-  password: string;
   remember: boolean;
+  loggedIn: boolean;
+  token: string | null
 }
 
 export const useAuthStore = defineStore('auth', {
   state: (): State => ({
-    email: '',
-    password: '',
+    email: localStorage.getItem('email') || sessionStorage.getItem('token') || '',
     remember: true,
+    loggedIn: false,
+    token: localStorage.getItem('token') || sessionStorage.getItem('token') || ''
   }),
   getters: {
-    getEmail: (state) => state.email
+    getEmail: (state) => state.email,
+    isLoggedIn: (state) => state.loggedIn
   },
 
   actions: {
     signIn(email: string, password: string, remember: boolean) {
       const auth = new Auth(remember)
-      const router = useRouter()
-      let success = false
-      try { auth.signIn(
+      auth.signIn(
         email,
         password,
-        () => { success = true, this.router.push('/account') },
-        () => { success = false, console.log("Não foi dessa vez!") }
-      ); if (success) { this.updateCredentials(email, password, remember) } 
-    } catch (e) { console.error('Sign in error:', e) }
+        () => {
+          this.updateCredentials(email, remember),
+          this.router.push('/account'),
+          this.$state.loggedIn = true
+        },
+        () => { this.$state.loggedIn = false, console.log("Não foi dessa vez!") }
+      )
     },
-    updateCredentials(email: string, password: string, remember: boolean) {
+    signOut() {
+      localStorage.removeItem('email');
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('email');
+      sessionStorage.removeItem('token');
+      this.$state.email = '';
+      this.$state.token = '';
+      this.$state.loggedIn = false;
+      this.router.push("/")
+    },
+    updateCredentials(email: string, remember: boolean) {
       this.$state.email = email;
-      this.$state.password = password;
       this.$state.remember = remember;
+      this.$state.token = localStorage.getItem('token') || sessionStorage.getItem('token')
     }
   }  
 });

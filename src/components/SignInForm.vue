@@ -44,5 +44,4 @@
     function handleSubmit () {
         auth.signIn(email.value || '', password.value || '', remember.value)
     }
-
 </script>

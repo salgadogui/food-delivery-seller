@@ -1,5 +1,5 @@
 <template>
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="en">
 
   <head>
@@ -23,52 +23,13 @@
   <body>
     <section class="setting">
       <div class="container">
-        <div class="settings">
-          <div class="setting__right--side">
-            <h3 class="setting__right--side-title">Account</h3>
-            <div class="setting__right--side-inner">
-              <h2 class="setting__right--side-InnerTxt">Personal information</h2>
-              <p class="setting__right--side-ImgTxt">Avatar</p>
-              <div class="setting__right--side-ChangeUserImg">
-                <img class="setting__right--side-UserImg" src="./img/account avatar.svg" alt="account avatar">
-                <button class="setting__right--side-btnChange" type="button">Change</button>
-                <button class="setting__right--side-btnRemove">Remove</button>
-              </div>
-              <div class="setting__right--side-input">
-                <div class="input-box">
-                  <label for="name">First Name</label>
-                  <input type="text" name="name" id="name" required placeholder="Jane">
-                </div>
-                <div class="input-box">
-                  <label for="lastname">Last Name</label>
-                  <input type="text" name="lastname" id="lastname" required placeholder="Robertson">
-                </div>
-                <div class="input-box">
-                  <label for="email">Email</label>
-                  <input type="email" name="email" id="email" required placeholder="jane.robertson@example.com">
-                </div>
-                <div class="input-box">
-                  <label for="number">Phone number</label>
-                  <input type="number" name="number" id="number" required placeholder="(217) 555-0113">
-                </div>
-              </div>
-              <div class="setting__right--btn">
-                <div><button class="LogOutBtn" type="button">Log out</button></div>
-                <span class="setting__right--btn-border"></span>
-                <div class="setting__right--mobile-btn">
-                  <div><button class="DiscardBtn" type="button">Discard changes</button></div>
-                <div><button class="SaveBtn" type="button">Save changes</button></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <AccountForm/>
       </div>
     </section>
   </body>
-
   </html>
 </template>
 
 <script setup lang="ts">
+  import AccountForm from '@/components/AccountForm.vue';
 </script>
