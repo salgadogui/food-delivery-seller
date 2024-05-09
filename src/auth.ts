@@ -22,7 +22,8 @@ export class Auth {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "X-API-KEY": "ldd+iZEBZvJ9x3FVM2azZdTujDM="
                 },
                 body: JSON.stringify(body)
             });

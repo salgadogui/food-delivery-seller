@@ -16,21 +16,6 @@
                 </div>
             </div>
     </form>
-
-    <!-- <form @submit.prevent="auth.signIn">
-        <label class="login_label" for="email">Email</label> -->
-        <!-- <input v-model="email" type="email"><br/>
-        
-        <label>Senha: </label>
-        <input v-model="password" type="password"><br/>
-
-        <label>Remember Me: </label>
-        <input v-model="remember" type="checkbox"><br/>
-
-        <button type="submit" v-show="!awaiting">
-            Sign In
-        </button> -->
-    <!-- </form> -->
 </template>
 
 <script setup lang="ts">
