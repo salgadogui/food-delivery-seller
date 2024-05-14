@@ -15,17 +15,11 @@
 
           <div class="header__menu--right-side">
             <nav class="header__menu--link">
-              <a class="menu_link" href="#">Restaurants</a>
-              <span class="header__menu--divider-vertical"></span>
-              <a class="menu_link active" href="#">My orders</a>
+              <a class="menu_link active" href="/stores">My Stores</a>
               <span class="header__menu--divider-vertical"></span>
               <a v-if="!auth.loggedIn" class="menu_link active" href="/signin">Sign In</a>
               <a v-if="auth.loggedIn" class="menu_link active" href="/account">Account</a>
             </nav>
-            <div class="header__menu--icon">
-              <a href="#"><img class="header__menu--icon-item" src="@/assets/img/shopping bag.svg" alt="shopping bag icon" /></a>
-              <span class="header__menu--icon-number">4</span>
-            </div>
             <img class="header__menu--icon-mobile" src="@/assets/img/menu.svg" alt=" header menu icon " />
           </div>
         </div>
