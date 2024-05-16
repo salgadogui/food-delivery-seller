@@ -5,7 +5,7 @@ interface State {
   email: string;
   remember: boolean;
   loggedIn: boolean;
-  token: string | null
+  token: string;
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -17,6 +17,7 @@ export const useAuthStore = defineStore('auth', {
   }),
   getters: {
     getEmail: (state) => state.email,
+    getToken: (state) => state.token,
     isLoggedIn: (state) => state.loggedIn
   },
 
