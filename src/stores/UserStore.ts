@@ -1,19 +1,23 @@
 import { defineStore } from "pinia";
-import { useAuthStore } from "./AuthStore";
 
-interface State {
-    stores: string[] | null[]; // dúvida... qual a tipagem correta?
-    auth_token: string
+interface Store {
+  id: number;
+  name: string; 
+}
+
+interface UserStore {
+    stores: Store[]; // dúvida... qual a tipagem correta?
+    authToken: string | null
 }
 
 export const useUserStore = defineStore('user', {
-    state: (): State => ({
+    state: (): UserStore => ({
         stores: [],
-        auth_token: localStorage.getItem('token') || sessionStorage.getItem('token') || ''
+        authToken: localStorage.getItem('token') || sessionStorage.getItem('token') || ''
     }),
 
     getters: {
-        getStores: (state) => state.stores,
+        getStores: (state): Store[] => state.stores,
     },
 
     actions: {
@@ -24,7 +28,7 @@ export const useUserStore = defineStore('user', {
                 headers: {
                   "Accept":"application/json",
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer ${this.auth_token}`
+                  "Authorization": `Bearer ${this.authToken}`
                 }
               })
               console.log("Response: ", response)
