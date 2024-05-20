@@ -1,14 +1,5 @@
 import { defineStore } from "pinia";
-
-interface Store {
-  id: number;
-  name: string; 
-}
-
-interface UserStore {
-    stores: Store[]; // dúvida... qual a tipagem correta?
-    authToken: string | null
-}
+import type { UserStore, Store } from "@/types/store";
 
 export const useUserStore = defineStore('user', {
     state: (): UserStore => ({
@@ -44,6 +35,3 @@ export const useUserStore = defineStore('user', {
         }
     }
 })
-
-// desenvolver fetchStores() para onMounted() no componente
-// ... para carregar assim que o componente é iniciado

@@ -7,7 +7,7 @@
                         {{ store.name }}
                 </div>
                 <div class="card__content--info">
-                    {{ store.created_at }}
+                    {{ new Date(store.created_at).toDateString() }}
                 </div>
             </div>
         </div>
@@ -21,11 +21,9 @@
 
     const userStore = useUserStore()
     const stores = ref<Store[]>([])
-    // userStore.fetchStores()
 
     onMounted(async () => {
       await userStore.fetchStores();
       stores.value = userStore.getStores;
     });
-
 </script>
