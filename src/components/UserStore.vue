@@ -1,6 +1,7 @@
 <template>
     <h3 class="setting__right--side-title">Your Stores</h3>
-    <section class="products__list">
+    <Button label="+ New Store" rounded />
+    <section class="products__list" style="margin-top: 15px;">
         <UserStoreCard/>
     </section>
 </template>
