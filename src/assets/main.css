@@ -34,6 +34,7 @@ a {
     width: 100%;
     margin: 0 auto;
     max-width: var(--breakpoint-desktop);
+    display : ruby-base;
 }
 
 .btn {

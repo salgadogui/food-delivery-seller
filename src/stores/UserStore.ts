@@ -32,6 +32,28 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
               console.error('Error fetching stores:', error);
             }
-        }
+        },
+        async createStore(store_name: string | undefined) {
+          const body = { store: { name: store_name } }
+          try {
+            const response = await fetch('http://localhost:3000/stores', {
+              method: "POST",
+              headers: {
+                "Accept":"application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${this.authToken}`
+              },
+              body: JSON.stringify(body)
+            })
+            console.log("Post Response: ", response)
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            console.log('Store created succesfully.');
+          } catch (error) {
+            console.error('Error creating store:', error);
+          }
+      }
     }
-})
+  }
+)
