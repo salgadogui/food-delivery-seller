@@ -9,7 +9,7 @@
         <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
     </div>
     <section class="products__list" style="margin-top: 15px;">
-        <UserStoreCard/>
+        <UserStoreCard :key="storeCardKey" />
     </section>
 </template>
 
@@ -23,18 +23,18 @@
     const storeName = ref<string>() 
     const showNewStoreForm =
         defineModel<boolean>('showNewStoreForm', { default : false })
-
+    const storeCardKey = ref(0);
 
     const toggleForm = () => {
         showNewStoreForm.value = !showNewStoreForm.value
     }
 
-    const submitForm = () => {
-        // const formData = { store: { name: storeName.value } }
-        userStore.createStore(storeName.value)
-    }
-
-    interface formData {
-        formData: Store
+    const submitForm = async () => {
+        try {
+            await userStore.createStore(storeName.value)
+            storeCardKey.value++;
+        } catch (err) {
+            console.error('Failed to submit form:', err);
+        }
     }
 </script>
