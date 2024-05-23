@@ -59,6 +59,10 @@ class FetchService {
     public async fetchProducts(): Promise<Product[]> {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {
+          // products : corrigir esta rota... aninhado em /stores/
+          // pergunta : quero listar todas os produtos de todas as lojas.. 
+                // manter esta rota? criar outra para lidar com 'show' 
+                    // de produtos específicos?
           method: "GET",
           headers: this.getHeaders()
         });
@@ -73,6 +77,29 @@ class FetchService {
         console.error('Error fetching products:', error);
         throw error;
       }
+    }
+
+    public async createProduct(
+      productName: string, productPrice: number, storeId: number): Promise<void> {
+      // dúvida ... relacionamento products one-to-many stores?
+        const body = {
+          product: {name: productName, price: productPrice, store: storeId },
+        };
+        try {
+          const response = await fetch(
+            `${this.baseUrl}/store/${body.product["store"]}/products`, {
+            method: "POST",
+            headers: this.getHeaders(),
+            body: JSON.stringify(body)
+          });
+          console.log("Post Response: ", response);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log('Product created successfully.');
+        } catch (error) {
+          console.error('Error creating product:', error);
+        }
     }
   }
   

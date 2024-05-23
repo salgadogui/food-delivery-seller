@@ -33,5 +33,10 @@ export const useUserStore = defineStore('user', {
       const data: Product[] = await fetchService.fetchProducts();
       this.products = data;
     },
+    async createProduct(
+      productName: string, productPrice: number, storeId: number) {
+        await fetchService.createProduct(productName, productPrice, storeName);
+        await this.fetchProducts();
+    },
   }
 });
