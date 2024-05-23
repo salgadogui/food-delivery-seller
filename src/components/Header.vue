@@ -15,10 +15,15 @@
 
           <div class="header__menu--right-side">
             <nav class="header__menu--link">
-              <a class="menu_link active" href="/stores">My Stores</a>
               <span class="header__menu--divider-vertical"></span>
-              <a v-if="!auth.loggedIn" class="menu_link active" href="/signin">Sign In</a>
-              <a v-if="auth.loggedIn" class="menu_link active" href="/account">Account</a>
+              <div v-if="!auth.loggedIn">
+                <a class="menu_link active" href="/signin">Sign In</a>
+              </div>
+              <div v-if="auth.loggedIn">
+                <a class="menu_link active" href="/stores">My Stores</a>
+                <a class="menu_link active" href="/products">My Products</a>
+                <a class="menu_link active" href="/account">Account</a>
+              </div>
             </nav>
             <img class="header__menu--icon-mobile" src="@/assets/img/menu.svg" alt=" header menu icon " />
           </div>

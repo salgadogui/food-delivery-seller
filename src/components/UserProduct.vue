@@ -1,6 +1,6 @@
 <template>
-    <h3 class="setting__right--side-title">Your Stores</h3>
-    <Button label="+ New Store" rounded @click="toggleForm" style="margin-right: 20px;" />
+    <h3 class="setting__right--side-title">Your Products</h3>
+    <Button label="+ New Product" rounded @click="toggleForm" style="margin-right: 20px;" />
     <div class="container" v-if="showNewStoreForm">
         <FloatLabel>
             <label for="store_name">Store name</label>
