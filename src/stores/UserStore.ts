@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import type { UserData, Store } from "@/types/store";
+import type { UserData } from "@/types/userdata";
+import type { Store } from "@/types/store";
 import FetchService from "@/fetchService";
 
 const baseUrl = 'http://localhost:3000';
