@@ -1,59 +1,29 @@
 import { defineStore } from "pinia";
 import type { UserStore, Store } from "@/types/store";
+import FetchService from "@/fetchService";
+
+const baseUrl = 'http://localhost:3000';
+const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
+const fetchService = new FetchService(baseUrl, authToken);
 
 export const useUserStore = defineStore('user', {
-    state: (): UserStore => ({
-        stores: [],
-        authToken: localStorage.getItem('token') || sessionStorage.getItem('token') || ''
-    }),
+  state: (): UserStore => ({
+    stores: [],
+    authToken: authToken
+  }),
 
-    getters: {
-        getStores: (state): Store[] => state.stores,
+  getters: {
+    getStores: (state): Store[] => state.stores,
+  },
+
+  actions: {
+    async fetchStores() {
+      const data: Store[] = await fetchService.fetchStores();
+      this.stores = data;
     },
-
-    actions: {
-        async fetchStores() {
-            try {
-              const response = await fetch('http://localhost:3000/stores', {
-                method: "GET",
-                headers: {
-                  "Accept":"application/json",
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${this.authToken}`
-                }
-              })
-              console.log("Response: ", response)
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const data = await response.json();
-              this.stores = data;
-              console.log('Data is fetched.');
-            } catch (error) {
-              console.error('Error fetching stores:', error);
-            }
-        },
-        async createStore(store_name: string | undefined) {
-          const body = { store: { name: store_name } }
-          try {
-            const response = await fetch('http://localhost:3000/stores', {
-              method: "POST",
-              headers: {
-                "Accept":"application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${this.authToken}`
-              },
-              body: JSON.stringify(body)
-            })
-            console.log("Post Response: ", response)
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            console.log('Store created succesfully.');
-          } catch (error) {
-            console.error('Error creating store:', error);
-          }
-      }
+    async createStore(storeName: string) {
+      await fetchService.createStore(storeName);
+      await this.fetchStores();
     }
   }
-)
+});
