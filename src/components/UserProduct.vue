@@ -1,6 +1,6 @@
 <template>
     <h3 class="setting__right--side-title">Your Products</h3>
-    <Button label="+ New Product" rounded @click="toggleForm" style="margin-right: 20px;" />
+    <Button label="+ New Store" rounded @click="toggleForm" style="margin-right: 20px;" />
     <div class="container" v-if="showNewStoreForm">
         <FloatLabel>
             <label for="store_name">Store name</label>
@@ -9,12 +9,12 @@
         <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
     </div>
     <section class="products__list" style="margin-top: 15px;">
-        <UserStoreCard :key="storeCardKey" />
+        <UserProductTable :key="storeCardKey" />
     </section>
 </template>
 
 <script setup lang="ts">
-    import UserStoreCard from './UserStoreCard.vue';
+    import UserProductTable from './UserProductTable.vue';
     import { ref } from 'vue';
     import { useUserStore } from '@/stores/UserStore';
 

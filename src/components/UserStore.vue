@@ -9,12 +9,12 @@
         <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
     </div>
     <section class="products__list" style="margin-top: 15px;">
-        <UserStoreCard :key="storeCardKey" />
+        <UserStoreTable :key="storeCardKey" />
     </section>
 </template>
 
 <script setup lang="ts">
-    import UserStoreCard from './UserStoreCard.vue';
+    import UserStoreTable from './UserStoreTable.vue';
     import { ref } from 'vue';
     import { useUserStore } from '@/stores/UserStore';
 
