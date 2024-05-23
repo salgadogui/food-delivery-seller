@@ -6,7 +6,13 @@ export interface Store {
     updated_at: string;
 }
 
-export interface UserStore {
+export interface Product {
+    id: number;
+    store_id: number;
+    price: number
+}
+
+export interface UserData {
     stores: Store[];
     authToken: string;
 }
