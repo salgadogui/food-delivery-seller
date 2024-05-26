@@ -25,5 +25,4 @@
         await userStore.fetchStores();
         stores.value = userStore.getStores;
     });
-
 </script>

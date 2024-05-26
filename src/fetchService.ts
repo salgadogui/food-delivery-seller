@@ -25,7 +25,6 @@ class FetchService {
           method: "GET",
           headers: this.getHeaders()
         });
-        console.log("Response: ", response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -66,7 +65,6 @@ class FetchService {
           method: "GET",
           headers: this.getHeaders()
         });
-        console.log("Response: ", response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -83,16 +81,15 @@ class FetchService {
       productName: string, productPrice: number, storeId: number): Promise<void> {
       // dúvida ... relacionamento products one-to-many stores?
         const body = {
-          product: {name: productName, price: productPrice, store: storeId },
+          product: { name: productName, price: productPrice, store_id: storeId },
         };
         try {
           const response = await fetch(
-            `${this.baseUrl}/store/${body.product["store"]}/products`, {
+            `${this.baseUrl}/stores/${storeId}/products`, {
             method: "POST",
             headers: this.getHeaders(),
             body: JSON.stringify(body)
           });
-          console.log("Post Response: ", response);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
