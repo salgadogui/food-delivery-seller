@@ -334,7 +334,7 @@ a {
 
 /* Products list  */
 .products__list {
-    display: grid;
+    display: flex;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 30px;
 }
@@ -760,6 +760,9 @@ a {
     /* Products list mobile      */
     .products__list {
         grid-template-columns: 1fr;
+        display: flex;
+        align-items: center;
+        align-content: center;
     }
 
     /* setting account mobile style */

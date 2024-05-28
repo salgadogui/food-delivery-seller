@@ -79,7 +79,6 @@ class FetchService {
 
     public async createProduct(
       productName: string, productPrice: number, storeId: number): Promise<void> {
-      // dúvida ... relacionamento products one-to-many stores?
         const body = {
           product: { name: productName, price: productPrice, store_id: storeId },
         };

@@ -21,7 +21,7 @@
   </head>
 
   <body>
-    <section class="setting">
+    <section class="settings">
       <div class="container">
         <AccountForm/>
       </div>
