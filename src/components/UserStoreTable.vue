@@ -14,15 +14,15 @@
 </template>
 
 <script setup lang="ts">
-    import { useUserStore } from '@/stores/UserStore';
+    import { useStoreStore } from '@/stores/StoreStore';
     import { onMounted, ref } from 'vue';
     import type { Store } from '@/types/store'
 
-    const userStore = useUserStore()
+    const storeStore = useStoreStore()
     const stores = ref<Store[]>([])
     
     onMounted(async () => {
-        await userStore.fetchStores();
-        stores.value = userStore.getStores;
+        await storeStore.fetchStores();
+        stores.value = storeStore.getStores;
     });
 </script>

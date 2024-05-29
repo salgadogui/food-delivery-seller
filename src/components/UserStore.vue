@@ -16,9 +16,9 @@
 <script setup lang="ts">
     import UserStoreTable from './UserStoreTable.vue';
     import { ref } from 'vue';
-    import { useUserStore } from '@/stores/UserStore';
+    import { useStoreStore } from '@/stores/StoreStore';
 
-    const userStore = useUserStore()
+    const storeStore = useStoreStore()
     const storeName = ref<string>() 
     const showNewStoreForm =
         defineModel<boolean>('showNewStoreForm', { default : false })
@@ -30,7 +30,7 @@
 
     const submitForm = async () => {
         try {
-            await userStore.createStore(storeName.value)
+            await storeStore.createStore(storeName.value)
             storeCardKey.value++;
         } catch (err) {
             console.error('Failed to submit form:', err);

@@ -8,17 +8,19 @@
 <script setup lang="ts">
     import UserProductTable from './UserProductTable.vue';
     import { onMounted, ref } from 'vue';
-    import { useUserStore } from '@/stores/UserStore';
+    import { useStoreStore } from '@/stores/StoreStore';
+    import { useProductStore } from '@/stores/ProductStore';
     import type { Store } from '@/types/store';
 
     
-    const userStore = useUserStore()
+    const storeStore = useStoreStore()
+    const productStore = useProductStore()
     onMounted(async () => {
-        await userStore.fetchStores();
-        stores.value = userStore.getStores;
+        await storeStore.fetchStores();
+        stores.value = storeStore.getStores;
     });
 
-    const stores = ref<Store[]>(userStore.getStores)
+    const stores = ref<Store[]>(storeStore.getStores)
     const productName = ref<string>()
     const productPrice = ref<string>()
     const storeId = ref<Store>() 
@@ -32,7 +34,7 @@
 
     const submitForm = async () => {
         try {
-            await userStore.createProduct(
+            await productStore.createProduct(
                 productName.value, parseFloat(productPrice.value), storeId.value["id"])
             storeCardKey.value++;
         } catch (err) {

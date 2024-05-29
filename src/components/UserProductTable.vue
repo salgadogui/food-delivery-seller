@@ -16,16 +16,16 @@
 </template>
 
 <script setup lang="ts">
-    import { useUserStore } from '@/stores/UserStore';
+    import { useProductStore } from '@/stores/ProductStore';
     import { onMounted, ref } from 'vue';
     import type { Product } from '@/types/product'
 
-    const userStore = useUserStore()
+    const productStore = useProductStore()
     const products = ref<Product[]>([])
     
     onMounted(async () => {
-        await userStore.fetchProducts();
-        products.value = userStore.getProducts;
+        await productStore.fetchProducts();
+        products.value = productStore.getProducts;
     });
 
 </script>
