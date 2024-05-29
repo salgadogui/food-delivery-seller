@@ -73,11 +73,6 @@ export class Auth {
     }
 
     signOut(andThen = () => {}) {
-        // this.storage.remove('token')
-        // this.storage.remove('email')    
-
-        // andThen() =>> Porque não funcionou?
-
         const transient = createStorage(false)
         const persistent = createStorage(true)
 
@@ -93,7 +88,7 @@ export class Auth {
         return Boolean(this.getFallback('token'))
     }
     
-    private getFallback(key:string):string | null { // Parece repetitivo. Já possui token e email no storage!
+    private getFallback(key:string):string | null {
         const transient = createStorage(false)
         const persistent = createStorage(true)
 

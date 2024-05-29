@@ -58,10 +58,6 @@ class FetchService {
     public async fetchProducts(): Promise<Product[]> {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {
-          // products : corrigir esta rota... aninhado em /stores/
-          // pergunta : quero listar todas os produtos de todas as lojas.. 
-                // manter esta rota? criar outra para lidar com 'show' 
-                    // de produtos específicos?
           method: "GET",
           headers: this.getHeaders()
         });
