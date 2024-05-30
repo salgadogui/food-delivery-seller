@@ -7,8 +7,12 @@ const baseUrl = 'http://localhost:3000';
 const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
 const fetchService = new FetchService(baseUrl, authToken);
 
+interface State {
+  products: Product[];
+}
+
 export const useProductStore = defineStore('product', {
-  state: (): ProductData => ({
+  state: (): State => ({
     products: [],
   }),
 

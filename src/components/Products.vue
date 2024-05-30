@@ -24,12 +24,12 @@
         <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
     </div>
     <section class="products__list" style="margin-top: 15px;">
-        <UserProductTable :key="storeCardKey" />
+        <ProductsTable :key="storeCardKey" />
     </section>
 </template>
 
 <script setup lang="ts">
-    import UserProductTable from './UserProductTable.vue';
+    import ProductsTable from './ProductsTable.vue';
     import { onMounted, ref } from 'vue';
     import { useStoreStore } from '@/stores/StoreStore';
     import { useProductStore } from '@/stores/ProductStore';

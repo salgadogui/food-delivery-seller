@@ -23,7 +23,7 @@
   <body>
     <section class="products__list">
       <div class="container">
-        <UserOrder/>
+        <Orders/>
       </div>
     </section>
   </body>
@@ -31,5 +31,5 @@
 </template>
 
 <script setup lang="ts">
-  import UserOrder from '@/components/UserOrder.vue';
+  import Orders from '@/components/Orders.vue';
 </script>

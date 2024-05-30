@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Stores</title>
+    <title>Your Products</title>
     <!-- Normalize default styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
     <!-- font awesome link -->
@@ -23,7 +23,7 @@
   <body>
     <section class="products__list">
       <div class="container">
-        <UserStore/>
+        <Products/>
       </div>
     </section>
   </body>
@@ -31,5 +31,5 @@
 </template>
 
 <script setup lang="ts">
-  import UserStore from '@/components/UserStore.vue';
+  import Products from '@/components/Products.vue';
 </script>

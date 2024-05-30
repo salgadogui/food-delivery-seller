@@ -1,3 +1,4 @@
+import type { Order } from "./types/order";
 import type { Product } from "./types/product";
 import type { Store } from "./types/store";
 
@@ -93,6 +94,25 @@ class FetchService {
           console.error('Error creating product:', error);
         }
     }
+
+    public async fetchOrders(): Promise<Order[]> {
+      try {
+        const response = await fetch(`${this.baseUrl}/orders`, {
+          method: "GET",
+          headers: this.getHeaders()
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Order[] = await response.json();
+        console.log('Data is fetched.');
+        return data;
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+        throw error;
+      }
+    }
+
   }
   
   export default FetchService;

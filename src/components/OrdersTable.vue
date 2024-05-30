@@ -11,21 +11,21 @@
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
                 <Column field="updated_at" header="Updated at" sortable style="width: 25%"></Column>
                 <Column field="price" header="Price" sortable style="width: 25%"></Column>
-            </DataTable>
+        </DataTable>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { useUserStore } from '@/stores/UserStore';
+    import { useProductStore } from '@/stores/ProductStore';
     import { onMounted, ref } from 'vue';
     import type { Product } from '@/types/product'
 
-    const userStore = useUserStore()
+    const productStore = useProductStore()
     const products = ref<Product[]>([])
     
     onMounted(async () => {
-        await userStore.fetchProducts();
-        products.value = userStore.getProducts;
+        await productStore.fetchProducts();
+        products.value = productStore.getProducts;
     });
 
 </script>

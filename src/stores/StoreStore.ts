@@ -1,14 +1,17 @@
 import { defineStore } from "pinia";
 import type { Store } from "@/types/store";
 import FetchService from "@/fetchService";
-import type { StoreData } from "@/types/store_data";
 
 const baseUrl = 'http://localhost:3000';
 const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
 const fetchService = new FetchService(baseUrl, authToken);
 
+interface State {
+  stores: Store[];
+}
+
 export const useStoreStore = defineStore('store', {
-  state: (): StoreData => ({
+  state: (): State => ({
     stores: []
   }),
 
