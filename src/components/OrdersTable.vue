@@ -6,11 +6,11 @@
             sortField="updated_at" :sortOrder="-1"
             tableStyle="min-width: 50rem">
                 <Column field="id" header="Id" sortable style="width: 25%"></Column>
-                <Column field="store_id" header="Store Id" sortable style="width: 25%"></Column>
-                <Column field="user_id" header="User Id" sortable style="width: 25%"></Column>
+                <Column field="store.name" header="Store name" sortable style="width: 25%"></Column>
+                <Column field="user.email" header="User Email" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
                 <Column field="updated_at" header="Updated at" sortable style="width: 25%"></Column>
-            </DataTable>
+        </DataTable>
     </div>
 </template>
 
@@ -26,5 +26,4 @@
         await orderStore.fetchOrders();
         orders.value = orderStore.getOrders;
     });
-
 </script>
