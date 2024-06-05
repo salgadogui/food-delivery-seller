@@ -12,7 +12,7 @@ import Paginator from 'primevue/paginator';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Dropdown from 'primevue/dropdown';
-
+import Tag from 'primevue/tag';
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -24,6 +24,7 @@ app.component('Paginator', Paginator)
 app.component('InputText', InputText)
 app.component('FloatLabel', FloatLabel)
 app.component('Dropdown', Dropdown)
+app.component('Tag', Tag)
 
 pinia.use(({ store }) => {store.router = markRaw(router)})
 app.use(PrimeVue)
