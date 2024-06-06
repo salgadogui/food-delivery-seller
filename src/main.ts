@@ -13,6 +13,7 @@ import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Dropdown from 'primevue/dropdown';
 import Tag from 'primevue/tag';
+import Dialog from 'primevue/dialog';
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -25,6 +26,7 @@ app.component('InputText', InputText)
 app.component('FloatLabel', FloatLabel)
 app.component('Dropdown', Dropdown)
 app.component('Tag', Tag)
+app.component('Dialog', Dialog)
 
 pinia.use(({ store }) => {store.router = markRaw(router)})
 app.use(PrimeVue)

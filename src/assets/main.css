@@ -1,3 +1,4 @@
+@import 'primeicons/primeicons.css'
 /* Nunito font regular */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
 
@@ -337,6 +338,7 @@ a {
     display: flex;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 30px;
+	flex-direction: column;
 }
 
 .product__card {

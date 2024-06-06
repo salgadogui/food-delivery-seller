@@ -1,14 +1,18 @@
 <template>
     <h3 class="setting__right--side-title">Your Stores</h3>
-    <Button label="+ New Store" rounded @click="toggleForm" style="margin-right: 20px;" />
-    <div class="container" v-if="showNewStoreForm">
-        <FloatLabel>
-            <label for="store_name">Store name</label>
-            <InputText id="store_name" v-model="storeName" />
-        </FloatLabel>
-        <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
-    </div>
-    <section class="products__list" style="margin-top: 15px;">
+	<Button label="+ New Store" @click="toggleForm" style="margin-right: 20px;" />
+	<Dialog v-model:visible="newStoreDialog" :style="{width: '450px'}" header="Add New Store" :modal="true" class="p-fluid">
+				<div class="field">
+					<label for="name">Name</label>
+			<InputText id="name" v-model.trim="storeName" required="true" :invalid="submitted && !storeName" />
+			<small class="p-error" v-if="submitted && !storeName">Name is required.</small>
+		</div>
+		<template #footer>
+			<Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
+			<Button label="Save" icon="pi pi-check" text @click="submitForm" />
+		</template>
+	</Dialog>
+<section class="products__list" style="margin-top: 15px;">
         <StoresTable :key="storeCardKey" />
     </section>
 </template>
@@ -18,22 +22,33 @@
     import { ref } from 'vue';
     import { useStoreStore } from '@/stores/StoreStore';
 
+	const newStoreDialog = ref(false);
+	const submitted = ref(false);
     const storeStore = useStoreStore()
     const storeName = ref<string>() 
-    const showNewStoreForm =
-        defineModel<boolean>('showNewStoreForm', { default : false })
     const storeCardKey = ref(0);
+	const deleteStoreDialog = ref(false);
+	const selectedStore = ref();
 
     const toggleForm = () => {
-        showNewStoreForm.value = !showNewStoreForm.value
+		storeName.value = {};
+		submitted.value = false;
+		newStoreDialog.value = true;	
     }
 
     const submitForm = async () => {
-        try {
+		submitted.value = true;
+		newStoreDialog.value = false;
+		try {
             await storeStore.createStore(storeName.value)
             storeCardKey.value++;
         } catch (err) {
             console.error('Failed to submit form:', err);
         }
     }
+	
+	const hideDialog = () => {
+		newStoreDialog.value = false;
+		submitted.value = false;
+	};
 </script>
