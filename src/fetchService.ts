@@ -56,6 +56,25 @@ class FetchService {
       }
     }
 
+    public async deleteStore(storeId: string): Promise<void> {
+      const body = { store: { id: storeId} };
+      try {
+        const response = await fetch(`${this.baseUrl}/stores/${storeId}`, {
+          method: "DELETE",
+          headers: this.getHeaders(),
+          body: JSON.stringify(body)
+        });
+        console.log("Post Response: ", response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log('Store deleted successfully.');
+      } catch (error) {
+        console.error('Error deleting store:', error);
+      }
+    }
+
+
     public async fetchProducts(): Promise<Product[]> {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {

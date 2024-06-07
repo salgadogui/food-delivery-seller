@@ -27,6 +27,10 @@ export const useStoreStore = defineStore('store', {
     async createStore(storeName: string) {
       await fetchService.createStore(storeName);
       await this.fetchStores();
-    }
+    },
+	async deleteStore(storeId: string){ 
+		await fetchService.deleteStore(storeId);
+		await this.fetchStores();
+	}
   }
 });

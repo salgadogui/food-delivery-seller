@@ -12,8 +12,8 @@
 			<Button label="Save" icon="pi pi-check" text @click="submitForm" />
 		</template>
 	</Dialog>
-<section class="products__list" style="margin-top: 15px;">
-        <StoresTable :key="storeCardKey" />
+	<section class="products__list" style="margin-top: 15px;">
+        <StoresTable :key="storeKey" @storeUpdated="updateStoresTable" />
     </section>
 </template>
 
@@ -26,7 +26,7 @@
 	const submitted = ref(false);
     const storeStore = useStoreStore()
     const storeName = ref<string>() 
-    const storeCardKey = ref(0);
+    const storeKey = ref(0);
 	const deleteStoreDialog = ref(false);
 	const selectedStore = ref();
 
@@ -41,7 +41,7 @@
 		newStoreDialog.value = false;
 		try {
             await storeStore.createStore(storeName.value)
-            storeCardKey.value++;
+            updateStoresTable();
         } catch (err) {
             console.error('Failed to submit form:', err);
         }
@@ -51,4 +51,13 @@
 		newStoreDialog.value = false;
 		submitted.value = false;
 	};
+
+	const fetchStores = async () => {
+	  await storeStore.fetchStores();
+	  stores.value = storeStore.stores;
+	};
+	
+	const updateStoresTable = () => {
+		storeKey.value++;	
+	}
 </script>

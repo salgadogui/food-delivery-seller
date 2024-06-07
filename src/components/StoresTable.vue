@@ -13,9 +13,8 @@
                 <Column field="name" header="Name" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
                 <Column field="updated_at" header="Updated at" sortable style="width: 25%"></Column>
-        </DataTable>
 		<Dialog v-model:visible="showStoreDialog" modal header="Edit Store" :style="{ width: '25rem' }">
-			<span class="p-text-secondary block mb-5">Update your information.</span>
+			<span class="p-text-secondary block mb-5">Update your store's information.</span>
 			<div class="flex align-items-center gap-3 mb-3">
 				<label for="name" class="font-semibold w-6rem">Name</label>
 				<InputText id="name" class="flex-auto" autocomplete="off" />
@@ -23,8 +22,10 @@
 			<div class="flex justify-content-end gap-2">
                 <Button type="button" label="Cancel" severity="secondary" @click="showStoreDialog = false"></Button>
                 <Button type="button" label="Save" @click="showStoreDialog = false"></Button>
+				<Button label="Delete" severity="danger" @click="handleDelete" />
             </div>
 		</Dialog>
+        </DataTable>
     </div>
 </template>
 
@@ -37,6 +38,8 @@
     const stores = ref<Store[]>([])
 	const selectedStore = ref()    
 	const showStoreDialog = ref(false);
+	
+	const emit = defineEmits(['storeUpdated'])
 
     onMounted(async () => {
         await storeStore.fetchStores();
@@ -46,4 +49,12 @@
 	const onRowSelect = (event) => {
 		showStoreDialog.value = true;
 	}
+
+	const handleDelete = async () => {
+	  if (selectedStore.value) {
+		await storeStore.deleteStore(selectedStore.value.id.toString());
+		showStoreDialog.value = false;
+		emit('storeUpdated');
+	  }
+	};
 </script>
