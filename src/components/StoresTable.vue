@@ -18,11 +18,11 @@
 			<span class="p-text-secondary block mb-5">Update your store's information.</span>
 			<div class="flex align-items-center gap-3 mb-3">
 				<label for="name" class="font-semibold w-6rem">Name</label>
-				<InputText id="name" class="flex-auto" autocomplete="off" />
+				<InputText id="name" class="flex-auto" autocomplete="off" v-model="selectedStoreName" />
 			</div>
 			<div class="flex justify-content-end gap-2">
 				<Button type="button" label="Cancel" severity="secondary" @click="showStoreDialog = false"></Button>
-				<Button type="button" label="Save" @click="showStoreDialog = false"></Button>
+				<Button type="button" label="Save" @click="handleUpdate"></Button>
 				<Button label="Delete" severity="danger" @click="handleDelete" />
 			</div>
 		</Dialog>
@@ -38,6 +38,7 @@
     const stores = ref<Store[]>([])
 	const selectedStore = ref()    
 	const showStoreDialog = ref(false);
+	const selectedStoreName = ref();
 	
 	const emit = defineEmits(['storeUpdated'])
 
@@ -53,6 +54,14 @@
 	const handleDelete = async () => {
 	  if (selectedStore.value) {
 		await storeStore.deleteStore(selectedStore.value.id.toString());
+		showStoreDialog.value = false;
+		emit('storeUpdated');
+	  }
+	};
+
+	const handleUpdate = async () => {
+	  if (selectedStore.value) {
+		await storeStore.updateStore(selectedStore.value.id.toString(), selectedStoreName.value.toString());
 		showStoreDialog.value = false;
 		emit('storeUpdated');
 	  }

@@ -31,6 +31,9 @@ export const useStoreStore = defineStore('store', {
 	async deleteStore(storeId: string){ 
 		await fetchService.delete('stores', storeId);
 		await this.fetchStores();
+	},
+	async updateStore(storeId: string, storeName: string) {
+		await fetchService.update<Store>('stores', storeId, { name: storeName })
 	}
   }
 });
