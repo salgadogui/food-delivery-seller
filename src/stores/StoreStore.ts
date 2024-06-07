@@ -21,15 +21,15 @@ export const useStoreStore = defineStore('store', {
 
   actions: {
     async fetchStores() {
-      const data: Store[] = await fetchService.fetchStores();
+      const data: Store[] = await fetchService.fetchAll<Store>('stores');
       this.stores = data;
     },
     async createStore(storeName: string) {
-      await fetchService.createStore(storeName);
+      await fetchService.create<Store>('stores', { name: storeName });
       await this.fetchStores();
     },
 	async deleteStore(storeId: string){ 
-		await fetchService.deleteStore(storeId);
+		await fetchService.delete('stores', storeId);
 		await this.fetchStores();
 	}
   }

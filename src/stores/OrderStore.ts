@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+// import FetchService from '@/fetchService'
 import FetchService from '@/fetchService'
 import type { Order } from "@/types/order";
 
@@ -21,7 +22,7 @@ export const useOrderStore = defineStore ('order', {
 
     actions: {
         async fetchOrders() {
-            const data: Order[] = await fetchService.fetchOrders();
+            const data: Order[] = await fetchService.fetchAll<Order>('orders');
             this.orders = data;
         }
     }

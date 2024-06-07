@@ -3,136 +3,59 @@ import type { Product } from "./types/product";
 import type { Store } from "./types/store";
 
 class FetchService {
-    private baseUrl: string;
-    private authToken: string;
-    public stores: Store[] = [];
-  
-    constructor(baseUrl: string, authToken: string) {
-      this.baseUrl = baseUrl;
-      this.authToken = authToken;
-    }
-  
-    private getHeaders() {
-      return {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.authToken}`
-      };
-    }
-  
-    public async fetchStores(): Promise<Store[]> {
-      try {
-        const response = await fetch(`${this.baseUrl}/stores`, {
-          method: "GET",
-          headers: this.getHeaders()
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Store[] = await response.json();
-        console.log('Data is fetched.');
-        return data;
-      } catch (error) {
-        console.error('Error fetching stores:', error);
-        throw error;
-      }
-    }
-  
-    public async createStore(storeName: string): Promise<void> {
-      const body = { store: { name: storeName } };
-      try {
-        const response = await fetch(`${this.baseUrl}/stores`, {
-          method: "POST",
-          headers: this.getHeaders(),
-          body: JSON.stringify(body)
-        });
-        console.log("Post Response: ", response);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        console.log('Store created successfully.');
-      } catch (error) {
-        console.error('Error creating store:', error);
-      }
-    }
+  private baseUrl: string;
+  private authToken: string;
 
-    public async deleteStore(storeId: string): Promise<void> {
-      const body = { store: { id: storeId} };
-      try {
-        const response = await fetch(`${this.baseUrl}/stores/${storeId}`, {
-          method: "DELETE",
-          headers: this.getHeaders(),
-          body: JSON.stringify(body)
-        });
-        console.log("Post Response: ", response);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        console.log('Store deleted successfully.');
-      } catch (error) {
-        console.error('Error deleting store:', error);
-      }
-    }
-
-
-    public async fetchProducts(): Promise<Product[]> {
-      try {
-        const response = await fetch(`${this.baseUrl}/products`, {
-          method: "GET",
-          headers: this.getHeaders()
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Product[] = await response.json();
-        console.log('Data is fetched.');
-        return data;
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        throw error;
-      }
-    }
-
-    public async createProduct(
-      productName: string, productPrice: number, storeId: number): Promise<void> {
-        const body = {
-          product: { name: productName, price: productPrice, store_id: storeId },
-        };
-        try {
-          const response = await fetch(
-            `${this.baseUrl}/stores/${storeId}/products`, {
-            method: "POST",
-            headers: this.getHeaders(),
-            body: JSON.stringify(body)
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          console.log('Product created successfully.');
-        } catch (error) {
-          console.error('Error creating product:', error);
-        }
-    }
-
-    public async fetchOrders(): Promise<Order[]> {
-      try {
-        const response = await fetch(`${this.baseUrl}/orders`, {
-          method: "GET",
-          headers: this.getHeaders()
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Order[] = await response.json();
-        console.log('Data is fetched.');
-        return data;
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-        throw error;
-      }
-    }
-
+  constructor(baseUrl: string, authToken: string) {
+    this.baseUrl = baseUrl;
+    this.authToken = authToken;
   }
-  
-  export default FetchService;
-  
+
+  private getHeaders() {
+    return {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${this.authToken}`
+    };
+  }
+
+  private async request<T>(url: string, method: string, body?: any): Promise<T> {
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: this.getHeaders(),
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(`Error during ${method} request to ${url}:`, error);
+      throw error;
+    }
+  }
+
+  public async fetchAll<T>(endpoint: string): Promise<T[]> {
+    return this.request<T[]>(`${this.baseUrl}/${endpoint}`, "GET");
+  }
+
+  public async fetchOne<T>(endpoint: string, id: string): Promise<T> {
+    return this.request<T>(`${this.baseUrl}/${endpoint}/${id}`, "GET");
+  }
+
+  public async create<T>(endpoint: string, data: T): Promise<T> {
+    return this.request<T>(`${this.baseUrl}/${endpoint}`, "POST", data);
+  }
+
+  public async update<T>(endpoint: string, id: string, data: T): Promise<T> {
+    return this.request<T>(`${this.baseUrl}/${endpoint}/${id}`, "PUT", data);
+  }
+
+  public async delete(endpoint: string, id: string): Promise<void> {
+    await this.request<void>(`${this.baseUrl}/${endpoint}/${id}`, "DELETE");
+  }
+}
+
+export default FetchService;
+

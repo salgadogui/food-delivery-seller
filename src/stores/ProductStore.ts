@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import FetchService from "@/fetchService";
 import type { Product } from "@/types/product";
-import type { ProductData } from "@/types/product_data";
 
 const baseUrl = 'http://localhost:3000';
 const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
@@ -22,12 +21,12 @@ export const useProductStore = defineStore('product', {
 
   actions: {
     async fetchProducts() {
-      const data: Product[] = await fetchService.fetchProducts();
+      const data: Product[] = await fetchService.fetchAll('products');
       this.products = data;
     },
     async createProduct(
       productName: string, productPrice: number, storeId: number) {
-        await fetchService.createProduct(productName, productPrice, storeId);
+        await fetchService.create<Product>(`stores/${storeId}/products`, { name: productName, price: productPrice, store_id: storeId });
         await this.fetchProducts();
     },
   }

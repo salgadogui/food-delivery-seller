@@ -13,6 +13,7 @@
                 <Column field="name" header="Name" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
                 <Column field="updated_at" header="Updated at" sortable style="width: 25%"></Column>
+		</DataTable>
 		<Dialog v-model:visible="showStoreDialog" modal header="Edit Store" :style="{ width: '25rem' }">
 			<span class="p-text-secondary block mb-5">Update your store's information.</span>
 			<div class="flex align-items-center gap-3 mb-3">
@@ -20,12 +21,11 @@
 				<InputText id="name" class="flex-auto" autocomplete="off" />
 			</div>
 			<div class="flex justify-content-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="showStoreDialog = false"></Button>
-                <Button type="button" label="Save" @click="showStoreDialog = false"></Button>
+				<Button type="button" label="Cancel" severity="secondary" @click="showStoreDialog = false"></Button>
+				<Button type="button" label="Save" @click="showStoreDialog = false"></Button>
 				<Button label="Delete" severity="danger" @click="handleDelete" />
-            </div>
+			</div>
 		</Dialog>
-        </DataTable>
     </div>
 </template>
 
