@@ -34,6 +34,10 @@ export const useStoreStore = defineStore('store', {
 	},
 	async updateStore(storeId: string, storeName: string) {
 		await fetchService.update<Store>('stores', storeId, { name: storeName })
-	}
+	},
+    async toggleStoreState(storeId: string) {
+    	await fetchService.patch<Store>(`/stores/${storeId}/toggle_state`, '', {});
+     	await this.fetchStores(); 
+    }
   }
 });

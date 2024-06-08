@@ -13,6 +13,16 @@
                 <Column field="name" header="Name" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
                 <Column field="updated_at" header="Updated at" sortable style="width: 25%"></Column>
+                <Column field="state" header="State" sortable style="width: 25%"></Column>
+				<Column header="Actions" style="width: 25%">
+					<template #body="slotProps">
+					  <Button
+						type="button"
+						label="Toggle State"
+						@click="toggleStoreState(slotProps.data.id.toString())"
+					  />
+					</template>
+				</Column>
 		</DataTable>
 		<Dialog v-model:visible="showStoreDialog" modal header="Edit Store" :style="{ width: '25rem' }">
 			<span class="p-text-secondary block mb-5">Update your store's information.</span>
@@ -66,4 +76,13 @@
 		emit('storeUpdated');
 	  }
 	};
+	
+	const toggleStoreState = async(storeId: string) => {
+		try {
+			storeStore.toggleStoreState(storeId);
+			emit('storeUpdated');
+		} catch (error) {
+			console.error('Error toggling store state:', error);
+		}
+	}
 </script>

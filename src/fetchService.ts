@@ -52,6 +52,10 @@ class FetchService {
     return this.request<T>(`${this.baseUrl}/${endpoint}/${id}`, "PUT", data);
   }
 
+  public async patch<T>(endpoint: string, id: string, data: Partial<T>): Promise<T> {
+    return this.request<T>(`${this.baseUrl}/${endpoint}/${id}`, "PATCH", data);
+  }
+
   public async delete(endpoint: string, id: string): Promise<void> {
     await this.request<void>(`${this.baseUrl}/${endpoint}/${id}`, "DELETE");
   }
