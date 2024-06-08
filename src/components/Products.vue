@@ -24,7 +24,7 @@
         <Button label="Submit" style="margin-left: 15px;" @click="submitForm"/>
     </div>
     <section class="products__list" style="margin-top: 15px;">
-        <ProductsTable :key="storeCardKey" />
+        <ProductsTable :key="productKey" @productUpdated="updateProductsTable" />
     </section>
 </template>
 
@@ -49,7 +49,7 @@
     const storeId = ref<Store>() 
     const showForm =
         defineModel<boolean>('showForm', { default : false })
-    const storeCardKey = ref(0);
+    const productKey = ref(0);
 
     const toggleForm = () => {
         showForm.value = !showForm.value
@@ -64,4 +64,8 @@
             console.error('Failed to submit form:', err);
         }
     }
+
+	const updateProductsTable = () => {
+		productKey.value++;	
+	}
 </script>

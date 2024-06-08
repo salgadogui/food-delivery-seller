@@ -29,5 +29,12 @@ export const useProductStore = defineStore('product', {
         await fetchService.create<Product>(`stores/${storeId}/products`, { name: productName, price: productPrice, store_id: storeId });
         await this.fetchProducts();
     },
+	async deleteProduct(productId: string, storeId: string){ 
+		await fetchService.delete(`stores/${storeId}/products`, productId);
+		await this.fetchProducts();
+	},
+	async updateProduct(productId: string, productName: string, productPrice: number, storeId: number) {
+		await fetchService.update<Product>(`stores/${storeId}/products`, productId, { name: productName, price: productPrice, store_id: storeId})
+	}
   }
 });
