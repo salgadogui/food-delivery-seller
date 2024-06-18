@@ -9,6 +9,15 @@
             tableStyle="min-width: 50rem">
 				<Column expander style="width: 5rem" />
                 <Column field="id" header="Id" sortable style="width: 25%"></Column>
+				<Column header="Confirm Order" style="width: 15%">
+					<template #body="slotProps">
+						<Button
+							v-if="slotProps.data.state === 'order_placed'"
+							label="Confirm Order"
+							@click="confirmOrder(slotProps.data.store.id, slotProps.data.id, getPaymentDetails(slotProps.data))"
+						/>
+					</template>
+				</Column>
                 <Column field="store.name" header="Store name" sortable style="width: 25%"></Column>
                 <Column field="user.email" header="User Email" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
@@ -61,4 +70,19 @@
 				return null;
 		}
 	} 
+
+	const confirmOrder = async (storeId: string, orderId: string, paymentDetails: any) => {
+		// This should not be here. Should be sent
+		// client-side by the buyer, but for now will suffice.	
+		await orderStore.confirmOrder(storeId, orderId, paymentDetails);
+	};
+	
+	const getPaymentDetails = (order) => {
+	  return {
+		value: order.total_value, // Replace with actual value
+		number: '5555 5555 5555 4444', // Replace with actual card number
+		valid: '2026-04-01', // Replace with actual card validity date
+		cvv: 123 // Replace with actual CVV
+	  };
+	};
 </script>
