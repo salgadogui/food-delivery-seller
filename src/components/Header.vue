@@ -3,23 +3,20 @@
       <div class="container">
         <div class="header__navbar">
           <div class="header__menu--left-side">
-            <a href="/">
+            <a v-if="!authStore.loggedIn" href="/signin">
               <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
             </a>
-
-            <div v-if="path == '/'" class="header__menu--search">
-              <input class="header__menu--search-input" type="text" placeholder="Search " />
-              <i class="header__menu--search-icon fa-solid fa-magnifying-glass"></i>
-            </div>
-          </div>
-
+             <a v-if="authStore.loggedIn" href="/account">
+              <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
+            </a>         
+		  </div>
           <div class="header__menu--right-side">
             <nav class="header__menu--link">
               <span class="header__menu--divider-vertical"></span>
-              <div v-if="!auth.loggedIn">
+              <div v-if="!authStore.loggedIn">
                 <a class="menu_link active" href="/signin">Sign In</a>
               </div>
-              <div v-if="auth.loggedIn">
+              <div v-if="authStore.loggedIn">
                 <a class="menu_link active" href="/orders">My Orders</a>
                 <a class="menu_link active" href="/stores">My Stores</a>
                 <a class="menu_link active" href="/products">My Products</a>
@@ -38,7 +35,7 @@ import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useAuthStore } from '@/stores/AuthStore';
 
-const auth = useAuthStore()
+const authStore  = useAuthStore()
 const route = useRoute()
 const path = computed( () => route.path )
 

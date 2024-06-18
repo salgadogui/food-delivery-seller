@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
       this.$state.email = '';
       this.$state.token = '';
       this.$state.loggedIn = false;
-      this.router.push("/")
+      this.router.push("/signin")
     },
     updateCredentials(email: string, remember: boolean) {
       this.$state.email = email;

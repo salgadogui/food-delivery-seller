@@ -19,5 +19,4 @@
         await orderStore.fetchOrders();
         orders.value = orderStore.fetchOrders;
     });
-
 </script>

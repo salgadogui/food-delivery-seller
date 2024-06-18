@@ -54,6 +54,30 @@ export const useOrderStore = defineStore ('order', {
             } catch (error) {
                 console.error('Error confirming order:', error);
             }
-        }
+        },
+		async updateOrderStatus(storeId: string, orderId: string, status: string) {
+		  try {
+			const response = await fetch(`${baseUrl}/stores/${storeId}/orders/${orderId}/update_status`, {
+			  method: 'PATCH',
+			  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${authToken}`,
+			  },
+			  body: JSON.stringify({ status }),
+			});
+
+			if (!response.ok) {
+			  throw new Error('Order status update failed');
+			}
+
+			const data = await response.json();
+			console.log('Order status updated successfully:', data);
+			// Update the local orders state if needed
+			await this.fetchOrders();
+		  } catch (error) {
+			console.error('Error updating order status:', error);
+		  }
+		}
     }
 })

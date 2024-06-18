@@ -9,15 +9,25 @@
             tableStyle="min-width: 50rem">
 				<Column expander style="width: 5rem" />
                 <Column field="id" header="Id" sortable style="width: 25%"></Column>
-				<Column header="Confirm Order" style="width: 15%">
+				  <Column header="Update Status" style="width: 15%">
 					<template #body="slotProps">
-						<Button
-							v-if="slotProps.data.state === 'order_placed'"
-							label="Confirm Order"
-							@click="confirmOrder(slotProps.data.store.id, slotProps.data.id, getPaymentDetails(slotProps.data))"
-						/>
+					<Button
+						v-if="slotProps.data.state === 'order_placed'"
+						label="Confirm Order"
+						@click="confirmOrder(slotProps.data.store.id, slotProps.data.id, getPaymentDetails(slotProps.data))"
+					/>
+				  <Button
+						v-if="slotProps.data.state === 'preparing_order'"
+						label="Out for Delivery"
+						@click="updateOrderStatus(slotProps.data.store.id, slotProps.data.id, 'out_for_delivery')"
+					  />
+					  <Button
+						v-if="slotProps.data.state === 'out_for_delivery'"
+						label="Delivered"
+						@click="updateOrderStatus(slotProps.data.store.id, slotProps.data.id, 'order_delivered')"
+					  />
 					</template>
-				</Column>
+				  </Column>
                 <Column field="store.name" header="Store name" sortable style="width: 25%"></Column>
                 <Column field="user.email" header="User Email" sortable style="width: 25%"></Column>
                 <Column field="created_at" header="Created at" sortable style="width: 25%"></Column>
@@ -33,7 +43,7 @@
 					<DataTable :value="slotProps.data.order_items">
 						<Column field="product.name" header="Product Name" sortable />	
 						<Column field="quantity" header="Quantity" sortable />	
-						<Column field="price" header="Price" sortable />	
+				  		<Column field="price" header="Price" sortable />	
 					</DataTable>
 				</template>
         </DataTable>
@@ -42,16 +52,15 @@
 
 <script setup lang="ts">
     import { useOrderStore } from '@/stores/OrderStore';
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, computed } from 'vue';
     import type { Order } from '@/types/order';
 
     const orderStore = useOrderStore()
-    const orders = ref<Order[]>([])
+	const orders = computed(() => orderStore.getOrders);
 	const expandedRows = ref({});
     
     onMounted(async () => {
         await orderStore.fetchOrders();
-        orders.value = orderStore.getOrders;
     });
 
 	const getSeverity = (state): String => {
@@ -72,17 +81,21 @@
 	} 
 
 	const confirmOrder = async (storeId: string, orderId: string, paymentDetails: any) => {
-		// This should not be here. Should be sent
-		// client-side by the buyer, but for now will suffice.	
 		await orderStore.confirmOrder(storeId, orderId, paymentDetails);
+        await orderStore.fetchOrders();
 	};
 	
+	const updateOrderStatus = async (storeId: string, orderId: string, status: string) => {
+	  await orderStore.updateOrderStatus(storeId, orderId, status);
+      await orderStore.fetchOrders();
+	};
+
 	const getPaymentDetails = (order) => {
 	  return {
-		value: order.total_value, // Replace with actual value
-		number: '5555 5555 5555 4444', // Replace with actual card number
-		valid: '2026-04-01', // Replace with actual card validity date
-		cvv: 123 // Replace with actual CVV
+		value: order.total_value, 
+		number: '5555 5555 5555 4444', 
+		valid: '2026-04-01', 
+		cvv: 123 
 	  };
 	};
 </script>
