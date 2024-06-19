@@ -10,6 +10,7 @@
     import { useOrderStore } from '@/stores/OrderStore';
     import type { Order } from '@/types/order';
     import OrdersTable from './OrdersTable.vue';
+	import OrderReception from './OrderReception.vue';
 
     
     const orderStore = useOrderStore()

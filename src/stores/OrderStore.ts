@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import FetchService from '@/fetchService'
 import type { Order } from "@/types/order";
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 const baseUrl = 'http://localhost:3000';
 const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
@@ -78,6 +79,34 @@ export const useOrderStore = defineStore ('order', {
 		  } catch (error) {
 			console.error('Error updating order status:', error);
 		  }
-		}
+		},
+		listenToOrderStatus(orderId: string, storeId: string, callback: (data: any) => void) {
+		  fetchEventSource(`http://localhost:3000/stores/${storeId}/orders/${orderId}/status`, {
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json',
+			  'Authorization': `Bearer ${authToken}`,
+			  'X-API-KEY': import.meta.env.VITE_X_API_KEY,
+			},
+			async onopen(response) {
+			  if (response.ok) {
+				console.log('connected!');
+				return;
+			  }
+			},
+			onmessage(event) {
+			  const data = JSON.parse(event.data);
+			  console.log(data);
+			  callback(data);
+			},
+			onclose() {
+			  console.log('Connection closed');
+			},
+			onerror(err) {
+			  console.error('EventSource failed:', err);
+			},
+		  });
+		},
+
     }
 })
